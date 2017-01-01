@@ -1,19 +1,17 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include"brains.h"
+#include "widget.h"
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication a(argc, argv);
+    Widget w;
+    w.show();
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    str*s=new str;
+    QObject::connect(&w,SIGNAL(Simple(QString)),s,SLOT(Simple(QString)));
+    QObject::connect(&w,SIGNAL(Invers(QString)),s,SLOT(Invers(QString)));
+    QObject::connect(&w,SIGNAL(UpperRegister(QString)),s,SLOT(UpperRistr(QString)));
+    QObject::connect(&w,SIGNAL(UppRegInver(QString)), s,SLOT(UppRegInver(QString)));
 
-    QObject* root=engine.rootObjects()[0];
-    Brains *brains=new Brains(root);
-
-    QObject::connect(root,SIGNAL(addition()),brains,SLOT(Addition()));
-
-    return app.exec();
+    return a.exec();
 }
-
